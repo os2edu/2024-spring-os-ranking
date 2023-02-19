@@ -128,8 +128,8 @@ async function getWorksGrade(reponame: string, latest: any) {
         let points = pointString.split('/').map((item: string, _index: number)=>parseFloat(item));
         
         // use 
-        // points[0] = points[0] == points[1] ? 100 : 0;
-        // points[1] = 100;
+        points[0] = points[0] == points[1] ? 100 : 0;
+        points[1] = 100;
         
         // Update available points by work name.
         updateAvailable(work, points[1]);
