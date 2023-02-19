@@ -72,15 +72,15 @@ function decodeLogFile(fileObject: any) {
 /**
  * Get the log file object in the repository.
  * @description By default, gh-pages branch is used, and only files in the root directory can be got.
- * @param githubUsername The github username of the student who completed the assignment.
+ * @param reponame The name of the student's assignment repo.
  * @param filename The file's name in the student repository.
  * @returns The file object contains the file info and more details
  */
-async function getRepoLogFile(githubUsername: string, filename: string) {
+async function getRepoLogFile(reponame: string, filename: string) {
     try {
         return await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
             owner: organiztion,
-            repo: `${assignment}-${githubUsername}`,
+            repo: `${reponame}`,
             path: filename,
             ref: 'gh-pages'
         });
@@ -102,14 +102,14 @@ async function getApiRemaining() {
 
 /**
  * Get the grade of works and combine them.
- * @param githubUsername The github username of the student who completed the assignment.
+ * @param reponame The name of the student's assignment repo.
  * @param latest The value of the latest.json. It should be a json string.
  * @returns Json object contains work and its points.
  */
-async function getWorksGrade(githubUsername: string, latest: any) {
+async function getWorksGrade(reponame: string, latest: any) {
     let grade = buildEmptyGrades();
     if(!latest) {
-        console.log(`${githubUsername.padEnd(15)} 没有找到latest.json文件   没有分数`);
+        console.log(`${reponame.padEnd(25)} 没有找到latest.json文件   没有分数`);
         return grade;
     }
 
@@ -119,7 +119,7 @@ async function getWorksGrade(githubUsername: string, latest: any) {
         if(!file[work]) continue;
 
         // Get the value of the work's log file.
-        let logFile = await getRepoLogFile(githubUsername, file[work]);
+        let logFile = await getRepoLogFile(reponame, file[work]);
         let gradeFile = decodeLogFile(logFile);
 
         // Handle the result
@@ -136,7 +136,7 @@ async function getWorksGrade(githubUsername: string, latest: any) {
 
         // Store grade to points variable.
         if(work in grade) grade[work] = points[0];
-        console.log(`${githubUsername.padEnd(15)} ${points}`)
+        console.log(`${reponame.padEnd(25)} ${work.padEnd(8)} ${points}`)
     }
     return grade;
 }
@@ -152,6 +152,7 @@ async function getGrade() {
     for(let repo of repos) {
         // Get the student's github username
         let githubUsername: string = repo['github_username'];
+        let reponame: string = repo['student_repository_name'];
 
         // Get userinfo
         let userInfo = await octokit.request('GET /users/{username}', { username: githubUsername});
@@ -160,10 +161,10 @@ async function getGrade() {
         grades[githubUsername] = {};
         
         // Get the latest grade record file
-        let latest = await getRepoLogFile(githubUsername, 'latest.json');
+        let latest = await getRepoLogFile(reponame, 'latest.json');
 
         // Store userinfo to json data
-        let studentGrades = await getWorksGrade(githubUsername, latest);
+        let studentGrades = await getWorksGrade(reponame, latest);
         let student = {
             name: userInfo['data']['login'],
             avatar: userInfo['data']['avatar_url'],
