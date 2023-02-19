@@ -94,7 +94,7 @@ const ClassRoomRank = (props: IProps) => {
             if(grade) {
               return <span>{grade}</span>
             }
-            return <span>-</span>
+            return <span>0</span>
           }
         }
       }) as ColumnsType<StudentInfo>),
