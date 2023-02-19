@@ -127,6 +127,10 @@ async function getWorksGrade(githubUsername: string, latest: any) {
         let pointString = gradeFile.substring(index).replace('Points: ', '');
         let points = pointString.split('/').map((item: string, _index: number)=>parseFloat(item));
         
+        // use 
+        points[0] = points[0] == points[1] ? 100 : 0;
+        points[1] = 100;
+        
         // Update available points by work name.
         updateAvailable(work, points[1]);
 
