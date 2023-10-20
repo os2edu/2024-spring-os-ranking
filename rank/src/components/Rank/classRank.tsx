@@ -49,7 +49,7 @@ const showUpdatetime = (props: any) => {
     title: '最新数据更新时间',
     centered: true,
     width: '75%',
-    content: <div>{dayjs(props.latestUpdatedAt).format('YYYY-MM-DD HH:mm::ss')}</div>,
+    content: <div>{dayjs(props.latestUpdatedAt).format('YYYY-MM-DD HH:mm:ss')}</div>,
     okText: '关闭',
     okButtonProps: { style: { width: 120 } }
   })
@@ -279,7 +279,7 @@ const ClassRoomRank = (props: IProps) => {
                 最新数据更新时间:
                 {props.latestUpdatedAt && (
                   <span style={{ marginLeft: 10, fontWeight: 'bold' }}>
-                    {dayjs(props.latestUpdatedAt).format('YYYY-MM-DD HH:mm::ss')}
+                    {dayjs(props.latestUpdatedAt).format('YYYY-MM-DD HH:mm:ss')}
                   </span>
                 )}
               </span>
