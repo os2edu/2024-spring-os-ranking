@@ -28,7 +28,7 @@ function App() {
           <Icon symbol="icon-autojiangbei" id="logo" />
           <div className="logo-title">
             {/* <span>{websiteTitle}</span> */}
-            <span>2023秋冬季os训练营</span>
+            <span>2023年秋冬季os训练营</span>
           </div>
         </div>
         <Contact isMobile={mobile} />
