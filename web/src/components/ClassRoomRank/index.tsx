@@ -58,14 +58,26 @@ const ClassRoomRank = (props: IProps) => {
         }
       },
       {
+        title: '',
+        align: 'center',
+        dataIndex: 'name',
+        fixed: true,
+        width: 50,
+        key: 'repoOwner',
+        colSpan: 0,
+        render(text: string, record: StudentInfo) {
+          return <AvatarInfo rank={record.rank} avatarURL={record.avatar} name='' />
+        }
+      },
+      {
         title: '学生',
         align: 'center',
         dataIndex: 'name',
         fixed: true,
-        width: 150,
+        width: 120,
         key: 'repoOwner',
         render(text: string, record: StudentInfo) {
-          return <AvatarInfo rank={record.rank} avatarURL={record.avatar} name={text} />
+          return <AvatarInfo rank={record.rank} avatarURL='' name={text} />
         }
       },
       {
