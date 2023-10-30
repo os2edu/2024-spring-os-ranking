@@ -76,6 +76,7 @@ const ClassRoomRank = (props: IProps) => {
         fixed: true,
         width: 120,
         key: 'repoOwner',
+        colSpan: 2,
         render(text: string, record: StudentInfo) {
           return <AvatarInfo rank={record.rank} avatarURL='' name={text} />
         }
